@@ -1,0 +1,6 @@
+[thehive-project]
+enabled=1
+priority=1
+name=TheHive-Project RPM repository
+baseurl=https://rpm.thehive-project.org/release/noarch
+gpgcheck=1
