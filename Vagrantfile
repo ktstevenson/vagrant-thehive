@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
         thehive.vm.box = "bento/centos-stream-8"
         thehive.vm.network "private_network", ip: "10.0.3.100"
         thehive.vm.network "forwarded_port", guest: 9000, host: 9000, host_ip: "127.0.0.1"
-        thehive.vm.provision "shell", path: "provisioning/thehive/scripts/java.sh", privileged: true
+        thehive.vm.provision "shell", path: "provisioning/common/scripts/java.sh", privileged: true
         thehive.vm.provision "file", source: "provisioning/thehive/files/cassandra.repo", destination: "/var/tmp/provision/cassandra.repo"
         thehive.vm.provision "shell", path: "provisioning/thehive/scripts/cassandra-01.sh", privileged: true
         thehive.vm.provision "file", source: "provisioning/thehive/files/cassandra.yaml", destination: "/var/tmp/provision/cassandra.yaml"
