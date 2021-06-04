@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
         thehive.vm.provision "shell", path: "provisioning/thehive/scripts/cassandra-01.sh", privileged: true
         thehive.vm.provision "file", source: "provisioning/thehive/files/cassandra.yaml", destination: "/var/tmp/provision/cassandra.yaml"
         thehive.vm.provision "shell", path: "provisioning/thehive/scripts/cassandra-02.sh", privileged: true
-        thehive.vm.provision "file", source: "provisioning/thehive/files/thehive.repo", destination: "/var/tmp/provision/thehive.repo"
+        thehive.vm.provision "file", source: "provisioning/common/files/thehive.repo", destination: "/var/tmp/provision/thehive.repo"
         thehive.vm.provision "shell", path: "provisioning/thehive/scripts/thehive-01.sh", privileged: true
         thehive.vm.provision "file", source: "provisioning/thehive/files/application.conf", destination: "/var/tmp/provision/application.conf"
         thehive.vm.provision "shell", path: "provisioning/thehive/scripts/thehive-02.sh", privileged: true
