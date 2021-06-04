@@ -41,4 +41,16 @@ Vagrant.configure("2") do |config|
         cortex.vm.provision "shell", path: "provisioning/cortex/scripts/cortex-02.sh", privileged: true
     end
 
+    config.vm.define "misp" do |misp|
+        misp.vm.provider "virtualbox" do |vmisp|
+            vmisp.name = "misp"
+            vmisp.memory = 4096
+            vmisp.cpus = 2
+        end
+        misp.vm.box = "bento/centos-stream-8"
+        misp.vm.network "private_network", ip: "10.0.3.102"
+        misp.vm.network "forwarded_port", guest: 443, host:8443, host_ip: "127.0.0.1"
+        misp.vm.provision "shell", path:"provisioning/misp/scripts/misp-01.sh", privileged: true
+    end
+
 end
