@@ -20,4 +20,25 @@ Vagrant.configure("2") do |config|
         thehive.vm.provision "shell", path: "provisioning/thehive/scripts/thehive-02.sh", privileged: true
     end
 
+    config.vm.define "cortex" do |cortex|
+        cortex.vm.provider "virtualbox" do |vcortex|
+            vcortex.name = "cortex"
+            vcortex.memory = 4096
+            vcortex.cpus = 2
+        end
+        cortex.vm.box = "bento/centos-stream-8"
+        cortex.vm.network "private_network", ip: "10.0.3.101"
+        cortex.vm.network "forwarded_port", guest: 9001, host: 9001, host_ip: "127.0.0.1"
+        cortex.vm.provision "shell", path: "provisioning/common/scripts/java.sh", privileged: true
+        cortex.vm.provision "file", source: "provisioning/cortex/files/elasticsearch.repo", destination: "/var/tmp/provision/elasticsearch.repo"
+        cortex.vm.provision "shell", path: "provisioning/cortex/scripts/elasticsearch-01.sh", privileged: true
+        cortex.vm.provision "file", source: "provisioning/cortex/files/elasticsearch.yml", destination: "/var/tmp/provision/elasticsearch.yml"
+        cortex.vm.provision "shell", path: "provisioning/cortex/scripts/elasticsearch-02.sh", privileged: true
+        cortex.vm.provision "shell", path: "provisioning/cortex/scripts/docker.sh", privileged: true
+        cortex.vm.provision "file", source: "provisioning/common/files/thehive.repo", destination: "/var/tmp/provision/thehive.repo"
+        cortex.vm.provision "shell", path: "provisioning/cortex/scripts/cortex-01.sh", privileged: true
+        cortex.vm.provision "file", source: "provisioning/cortex/files/application.conf", destination: "/var/tmp/provision/application.conf"
+        cortex.vm.provision "shell", path: "provisioning/cortex/scripts/cortex-02.sh", privileged: true
+    end
+
 end
